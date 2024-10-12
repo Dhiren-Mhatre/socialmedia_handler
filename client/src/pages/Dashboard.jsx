@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios"; 
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const [imageUploaders, setImageUploaders] = useState([]); 
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState(""); 
-  const navigate = useNavigate(); 
+  const [imageUploaders, setImageUploaders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchImageUploaders = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/user"); 
+        const response = await axios.get(
+          "https://socialmedia-handler-backend.onrender.com/user"
+        );
         if (response.data.success) {
           setImageUploaders(response.data.data);
         } else {
-          setError(response.data.message || "Failed to fetch image uploader data.");
+          setError(
+            response.data.message || "Failed to fetch image uploader data."
+          );
         }
         setLoading(false);
       } catch (err) {
@@ -26,26 +30,32 @@ const Dashboard = () => {
       }
     };
 
-    fetchImageUploaders(); 
+    fetchImageUploaders();
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     sessionStorage.removeItem("user");
-    navigate("/login"); 
+    navigate("/logout");
   };
 
   const handleAddMoreUsers = () => {
-    navigate("/"); 
+    navigate("/");
   };
 
   const handleDeleteUploader = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this uploader?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this uploader?"
+    );
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:3000/user/${id}`);
-      setImageUploaders((prev) => prev.filter((uploader) => uploader._id !== id)); // Update the state
+      await axios.delete(
+        `https://socialmedia-handler-backend.onrender.com/user/${id}`
+      );
+      setImageUploaders((prev) =>
+        prev.filter((uploader) => uploader._id !== id)
+      ); // Update the state
     } catch (err) {
       console.error("Error deleting image uploader:", err);
       setError("Failed to delete the image uploader.");
@@ -71,7 +81,10 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-center text-gray-800"> Dashboard Panel</h1>
+        <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">
+          {" "}
+          Dashboard Panel
+        </h1>
 
         {/* Logout and Add More Users Buttons */}
         <div className="flex justify-between mb-4">
@@ -94,17 +107,30 @@ const Dashboard = () => {
             <thead className="bg-blue-800 flex-1 text-white">
               <tr>
                 <th className="py-3 px-4 uppercase font-semibold text-sm"> </th>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Full Name</th>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Social Media</th>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Profile Photos</th>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Actions</th> {/* Actions column */}
+                <th className="py-3 px-4 uppercase font-semibold text-sm">
+                  Full Name
+                </th>
+                <th className="py-3 px-4 uppercase font-semibold text-sm">
+                  Social Media
+                </th>
+                <th className="py-3 px-4 uppercase font-semibold text-sm">
+                  Profile Photos
+                </th>
+                <th className="py-3 px-4 uppercase font-semibold text-sm">
+                  Actions
+                </th>{" "}
+                {/* Actions column */}
               </tr>
             </thead>
             <tbody className="text-orange-700 flex-1">
               {imageUploaders.map((uploader, index) => (
                 <tr key={uploader._id} className="hover:bg-gray-100">
-                  <td className="py-3 px-4 border-b border-gray-200">{index + 1}</td>
-                  <td className="py-3 px-4 border-b border-gray-200">{uploader.fullName}</td>
+                  <td className="py-3 px-4 border-b border-gray-200">
+                    {index + 1}
+                  </td>
+                  <td className="py-3 px-4 border-b border-gray-200">
+                    {uploader.fullName}
+                  </td>
                   <td className="py-3 px-4 border-b border-gray-200">
                     <a
                       href={uploader.socialMediaHandle}
@@ -123,7 +149,7 @@ const Dashboard = () => {
                           src={photo}
                           alt={uploader.fullName}
                           className="w-16 h-16 object-cover rounded-md border border-gray-300 cursor-pointer hover:shadow-lg"
-                          onClick={() => window.open(photo, "_blank")} 
+                          onClick={() => window.open(photo, "_blank")}
                         />
                       ))}
                     </div>
@@ -141,7 +167,10 @@ const Dashboard = () => {
               ))}
               {imageUploaders.length === 0 && (
                 <tr>
-                  <td colSpan="5" className="py-4 px-4 text-center text-gray-500">
+                  <td
+                    colSpan="5"
+                    className="py-4 px-4 text-center text-gray-500"
+                  >
                     No image uploaders found.
                   </td>
                 </tr>

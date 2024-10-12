@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "../assets/image.png";
 import Logo from "../assets/logo.png";
- 
+
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
 import "../styles/Login.css";
@@ -11,11 +11,12 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [ token, setToken ] = useState(JSON.parse(localStorage.getItem("auth")) || "");
+  const [token, setToken] = useState(
+    JSON.parse(localStorage.getItem("auth")) || ""
+  );
   const navigate = useNavigate();
 
-
-    const handleAddMoreUsers = () => {
+  const handleAddMoreUsers = () => {
     // Redirect to SubmitForm page
     navigate("/");
   };
@@ -31,10 +32,10 @@ const Login = () => {
       };
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/v1/login",
+          "https://socialmedia-handler-backend.onrender.com/api/v1/login",
           formData
         );
-        localStorage.setItem('auth', JSON.stringify(response.data.token));
+        localStorage.setItem("auth", JSON.stringify(response.data.token));
         toast.success("Login successfull");
         navigate("/dashboard");
       } catch (err) {
@@ -45,9 +46,9 @@ const Login = () => {
       toast.error("Please fill all inputs");
     }
   };
- 
+
   useEffect(() => {
-    if(token !== ""){
+    if (token !== "") {
       toast.success("You already logged in");
       navigate("/dashboard");
     }
@@ -55,12 +56,9 @@ const Login = () => {
 
   return (
     <div className="login-main">
-  
       <div className="login-right">
         <div className="login-right-container">
-       
           <div className="login-center">
-          
             <h2>Welcome back!</h2>
             <p>Please enter your details</p>
             <form onSubmit={handleLoginSubmit}>
@@ -99,12 +97,11 @@ const Login = () => {
               </div>
               <div className="login-center-buttons">
                 <button type="submit">Log In</button>
-                 
               </div>
             </form>
           </div>
-          <button 
-            onClick={handleAddMoreUsers} 
+          <button
+            onClick={handleAddMoreUsers}
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
           >
             Add More Users

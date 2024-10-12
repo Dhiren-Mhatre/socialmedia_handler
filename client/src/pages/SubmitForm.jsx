@@ -35,7 +35,7 @@ const SubmitForm = () => {
     try {
       // Make a POST request using axios
       const response = await axios.post(
-        "http://localhost:3000/user/add", // Ensure this is the correct route for the backend
+        "https://socialmedia-handler-backend.onrender.com/user/add", // Ensure this is the correct route for the backend
         formData,
         {
           headers: {
@@ -51,13 +51,14 @@ const SubmitForm = () => {
       }
     } catch (error) {
       setMessage(
-        error.response?.data?.message || "Failed to submit the form. Please try again later."
+        error.response?.data?.message ||
+          "Failed to submit the form. Please try again later."
       );
     } finally {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="max-w-full w-full mx-auto bg-white shadow-md rounded-md p-6">
       <div className="mb-4">
@@ -120,7 +121,9 @@ const SubmitForm = () => {
               Choose Files
             </button>
             <span className="text-sm text-gray-500">
-              {selectedFiles ? `${selectedFiles.length} file(s) selected` : "No file chosen"}
+              {selectedFiles
+                ? `${selectedFiles.length} file(s) selected`
+                : "No file chosen"}
             </span>
           </div>
         </div>
