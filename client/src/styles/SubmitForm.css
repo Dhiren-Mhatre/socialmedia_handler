@@ -1,0 +1,108 @@
+.submit-main {
+  display: flex;
+  height: 100vh;
+}
+
+.submit-left {
+  flex-grow: 1;
+  background-color: #F2F2F2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-left img {
+  width: 350px;
+}
+
+.submit-right {
+  flex-grow: 1;
+  height: 100vh;
+}
+
+.submit-right-container {
+  height: 100%;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.submit-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.submit-logo {
+  align-self: center;
+  padding-top: 50px;
+}
+
+.submit-center {
+  text-align: center;
+}
+
+.submit-center h2 {
+  font-size: 35px;
+}
+
+.submit-center p {
+  font-weight: 400;
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.submit-form input[type="text"],
+.submit-form input[type="url"],
+.submit-form input[type="file"] {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 0px;
+  border-bottom: 1px solid black;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.file-input-div {
+  position: relative;
+}
+
+.submit-form button[type="submit"] {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  background: black;
+  color: white;
+  transition: background 500ms linear, color 500ms linear;
+}
+
+.submit-form button[type="submit"]:hover {
+  color: #333;
+  background-color: white;
+  border: 2px solid black;
+}
+
+.submit-center-buttons {
+  margin-top: 30px;
+}
+
+.submit-bottom-p {
+  text-align: center;
+  font-size: 15px;
+  padding-bottom: 30px;
+}
+
+.submit-bottom-p a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.submit-bottom-p a:hover {
+  text-decoration: underline;
+}
