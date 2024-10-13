@@ -127,13 +127,13 @@ const Dashboard = () => {
           </button>
           <button
             className="text-lg font-medium focus:outline-none hover:bg-blue-700 rounded-lg px-4 py-2"
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/dashboard")}
           >
             Profile
           </button>
           <button
             className="text-lg font-medium focus:outline-none hover:bg-blue-700 rounded-lg px-4 py-2"
-            onClick={() => navigate("/settings")}
+            onClick={() => navigate("/dashboard")}
           >
             Settings
           </button>
