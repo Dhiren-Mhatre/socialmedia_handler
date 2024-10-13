@@ -9,23 +9,19 @@ const SubmitForm = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Function to handle file selection
   const handleFileSelect = (event) => {
     setSelectedFiles(event.target.files);
   };
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage(""); // Clear any previous message
 
-    // Create form data to send to the server
     const formData = new FormData();
     formData.append("fullName", name);
     formData.append("socialMediaHandle", socialMedia);
 
-    // Append all selected files to the form data
     if (selectedFiles) {
       Array.from(selectedFiles).forEach((file) => {
         formData.append("profilePhotos", file); // Ensure field name matches backend multer setup
@@ -33,9 +29,8 @@ const SubmitForm = () => {
     }
 
     try {
-      // Make a POST request using axios
       const response = await axios.post(
-        "https://socialmedia-handler-backend.onrender.com/user/add", // Ensure this is the correct route for the backend
+        "https://socialmedia-handler-backend.onrender.com/user/add", 
         formData,
         {
           headers: {
@@ -66,10 +61,7 @@ const SubmitForm = () => {
       </div>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="space-y-2">
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
             Name:
           </label>
           <input
@@ -78,14 +70,11 @@ const SubmitForm = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter your name"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         <div className="space-y-2">
-          <label
-            htmlFor="social-media"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="social-media" className="block text-sm font-medium text-gray-700">
             Social Media Handle:
           </label>
           <input
@@ -94,14 +83,11 @@ const SubmitForm = () => {
             value={socialMedia}
             onChange={(e) => setSocialMedia(e.target.value)}
             placeholder="Social media handle URL"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         <div className="space-y-2">
-          <label
-            htmlFor="images"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="images" className="block text-sm font-medium text-gray-700">
             Upload Images:
           </label>
           <div className="flex items-center space-x-2">
@@ -109,7 +95,7 @@ const SubmitForm = () => {
               id="images"
               type="file"
               multiple
-              name="profilePhotos" // Must match multer's expected field name
+              name="profilePhotos"
               onChange={handleFileSelect}
               className="hidden"
             />
@@ -129,16 +115,13 @@ const SubmitForm = () => {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-sm hover:bg-blue-700 transition duration-300"
+          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
           disabled={loading}
         >
           {loading ? "Submitting..." : "Submit"}
         </button>
-        <p className="login-bottom-p">
-          <Link
-            className="w-full p-4 bg-indigo-600 text-white py-2 rounded-sm hover:bg-blue-700 transition duration-300"
-            to="/login"
-          >
+        <p className="text-center mt-4">
+          <Link className="text-blue-600 hover:underline" to="/login">
             Admin login
           </Link>
         </p>

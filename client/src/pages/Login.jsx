@@ -1,42 +1,28 @@
 import React, { useEffect, useState } from "react";
-import Image from "../assets/image.png";
-import Logo from "../assets/logo.png";
-
-import { FaEye } from "react-icons/fa6";
-import { FaEyeSlash } from "react-icons/fa6";
-import "../styles/Login.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [token, setToken] = useState(
-    JSON.parse(localStorage.getItem("auth")) || ""
-  );
+  const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
   const navigate = useNavigate();
 
-  const handleAddMoreUsers = () => {
-    // Redirect to SubmitForm page
-    navigate("/");
-  };
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     let email = e.target.email.value;
     let password = e.target.password.value;
 
     if (email.length > 0 && password.length > 0) {
-      const formData = {
-        email,
-        password,
-      };
+      const formData = { email, password };
       try {
         const response = await axios.post(
           "https://socialmedia-handler-backend.onrender.com/api/v1/login",
           formData
         );
         localStorage.setItem("auth", JSON.stringify(response.data.token));
-        toast.success("Login successfull");
+        toast.success("Login successful");
         navigate("/dashboard");
       } catch (err) {
         console.log(err);
@@ -49,65 +35,55 @@ const Login = () => {
 
   useEffect(() => {
     if (token !== "") {
-      toast.success("You already logged in");
+      toast.success("You are already logged in");
       navigate("/dashboard");
     }
-  }, []);
+  }, [token, navigate]);
 
   return (
-    <div className="login-main">
-      <div className="login-right">
-        <div className="login-right-container">
-          <div className="login-center">
-            <h2>Welcome back!</h2>
-            <p>Please enter your details</p>
-            <form onSubmit={handleLoginSubmit}>
-              <input type="email" placeholder="Email" name="email" />
-              <div className="pass-input-div">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  name="password"
+    <div className="flex min-h-screen">
+      <div className="flex-1 flex justify-center items-center bg-gray-100">
+        <div className="w-full max-w-md p-8 bg-white shadow-md rounded-md">
+          <h2 className="text-3xl font-bold text-center mb-4">Welcome back!</h2>
+          <p className="text-lg text-center mb-6">Please enter your details</p>
+          <form onSubmit={handleLoginSubmit} className="space-y-4">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="w-full px-4 py-2 border-b border-gray-300 focus:outline-none"
+            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                className="w-full px-4 py-2 border-b border-gray-300 focus:outline-none"
+              />
+              {showPassword ? (
+                <FaEyeSlash
+                  className="absolute right-3 bottom-3 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
                 />
-                {showPassword ? (
-                  <FaEyeSlash
-                    onClick={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                  />
-                ) : (
-                  <FaEye
-                    onClick={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                  />
-                )}
-              </div>
-
-              <div className="login-center-options">
-                <div className="remember-div">
-                  <input type="checkbox" id="remember-checkbox" />
-                  <label htmlFor="remember-checkbox">
-                    Remember for 30 days
-                  </label>
-                </div>
-                <a href="#" className="forgot-pass-link">
-                  Forgot password?
-                </a>
-              </div>
-              <div className="login-center-buttons">
-                <button type="submit">Log In</button>
-              </div>
-            </form>
-          </div>
-          <button
-            onClick={handleAddMoreUsers}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
-          >
-            Add More Users
-          </button>
-          <p className="login-bottom-p">
-            Don't have an account? <Link to="/register">Sign Up</Link>
+              ) : (
+                <FaEye
+                  className="absolute right-3 bottom-3 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              )}
+            </div>
+            <div className="flex justify-end text-sm">
+              <a href="#" className="text-blue-600 hover:underline">Forgot password?</a>
+            </div>
+            <button
+              type="submit"
+              className="w-full py-2 bg-black text-white font-semibold rounded-md transition-colors hover:bg-white hover:text-black hover:border-black border-2 border-black"
+            >
+              Log In
+            </button>
+          </form>
+          <p className="text-center mt-4">
+            Don't have an account? <Link to="/register" className="text-blue-600 hover:underline">Sign Up</Link>
           </p>
         </div>
       </div>

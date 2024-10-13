@@ -1,25 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Image from "../assets/image.png";
-import Logo from "../assets/logo.png";
-
-import { FaEye } from "react-icons/fa6";
-import { FaEyeSlash } from "react-icons/fa6";
-import "../styles/Register.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Login = () => {
+const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem("auth")) || ""
   );
-
-  const handleAddMoreUsers = () => {
-    // Redirect to SubmitForm page
-    navigate("/");
-  };
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +37,7 @@ const Login = () => {
             "https://socialmedia-handler-backend.onrender.com/api/v1/register",
             formData
           );
-          toast.success("Registration successfull");
+          toast.success("Registration successful");
           navigate("/login");
         } catch (err) {
           toast.error(err.message);
@@ -62,97 +52,95 @@ const Login = () => {
 
   useEffect(() => {
     if (token !== "") {
-      toast.success("You already logged in");
+      toast.success("You are already logged in");
       navigate("/dashboard");
     }
   }, []);
 
   return (
-    <div className="register-main">
-      <div className="register-right">
-        <div className="register-right-container">
-          <div className="register-center">
-            <h2>Welcome to our website!</h2>
-            <p>Please enter your details</p>
-            <form onSubmit={handleRegisterSubmit}>
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                required={true}
+    <div className="flex h-screen">
+     
+      <div className="flex-grow flex flex-col justify-center items-center bg-white p-6">
+        <h2 className="text-3xl font-bold mb-4 text-center">Welcome!</h2>
+        <p className="text-lg mb-8 text-center">Please enter your details</p>
+        <form className="w-full max-w-md" onSubmit={handleRegisterSubmit}>
+          <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            required
+            className="w-full px-4 py-2 mb-4 border-b-2 border-gray-300 focus:outline-none focus:border-indigo-500"
+          />
+          <input
+            type="text"
+            placeholder="Lastname"
+            name="lastname"
+            required
+            className="w-full px-4 py-2 mb-4 border-b-2 border-gray-300 focus:outline-none focus:border-indigo-500"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            required
+            className="w-full px-4 py-2 mb-4 border-b-2 border-gray-300 focus:outline-none focus:border-indigo-500"
+          />
+          <div className="relative mb-4">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              name="password"
+              required
+              className="w-full px-4 py-2 border-b-2 border-gray-300 focus:outline-none focus:border-indigo-500"
+            />
+            {showPassword ? (
+              <FaEyeSlash
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-3 text-xl cursor-pointer"
               />
-              <input
-                type="text"
-                placeholder="Lastname"
-                name="lastname"
-                required={true}
+            ) : (
+              <FaEye
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-3 text-xl cursor-pointer"
               />
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                required={true}
+            )}
+          </div>
+          <div className="relative mb-4">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              required
+              className="w-full px-4 py-2 border-b-2 border-gray-300 focus:outline-none focus:border-indigo-500"
+            />
+            {showPassword ? (
+              <FaEyeSlash
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-3 text-xl cursor-pointer"
               />
-              <div className="pass-input-div">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  name="password"
-                  required={true}
-                />
-                {showPassword ? (
-                  <FaEyeSlash
-                    onClick={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                  />
-                ) : (
-                  <FaEye
-                    onClick={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                  />
-                )}
-              </div>
-              <div className="pass-input-div">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Confirm Password"
-                  name="confirmPassword"
-                  required={true}
-                />
-                {showPassword ? (
-                  <FaEyeSlash
-                    onClick={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                  />
-                ) : (
-                  <FaEye
-                    onClick={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                  />
-                )}
-              </div>
-              <div className="register-center-buttons">
-                <button type="submit">Sign Up</button>
-              </div>
-            </form>
+            ) : (
+              <FaEye
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-3 text-xl cursor-pointer"
+              />
+            )}
           </div>
           <button
-            onClick={handleAddMoreUsers}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
+            type="submit"
+            className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300"
           >
-            Add More Users
+            Sign Up
           </button>
-          <p className="login-bottom-p">
-            Already have an account? <Link to="/login">Login</Link>
-          </p>
-        </div>
+        </form>
+        <p className="mt-6 text-center">
+          Already have an account?{" "}
+          <Link to="/login" className="text-indigo-600 font-semibold">
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;
