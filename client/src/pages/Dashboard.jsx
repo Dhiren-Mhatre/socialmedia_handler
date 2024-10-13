@@ -7,7 +7,7 @@ const Dashboard = () => {
   const [imageUploaders, setImageUploaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State to manage sidebar visibility
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to manage sidebar visibility
   const navigate = useNavigate();
   const sidebarRef = useRef(null); // Reference for the sidebar
 
